@@ -143,3 +143,17 @@ git.defaultCloneDirectory 4]null]
 ```
 
 In this format the lengths are encoded as [base36](https://en.wikipedia.org/wiki/Base36) numbers, making the format a tiny bit more space-efficient.
+
+## Additional considerations
+
+The format can be made even more compact by specifying more opener-closer pairs which can be associated with predefined values or types. There are 256-36=220 possible values to chose from, so 110 possible pairs. 
+
+Further bytes could be cut by getting rid of some opener-closer pairs by making some of these values stand for both
+
+E.g. the [front page MessagePack example](https://msgpack.org/) could be encoded in 17 bytes:
+
+```
+7!compact6@schema
+```
+
+Meaning: 7-byte key with a boolean true value (!), 6-byte key with an integer 0 value (@). The map is implied by keys.
